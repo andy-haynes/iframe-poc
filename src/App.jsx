@@ -41,8 +41,10 @@ function App() {
       <div className="App">
           <span>
               Each box is the root DOM for an app running in a corresponding sandboxed iframe.
-              Initially red, boxes turn green when the parent window renders a DOM element sent
-              from the corresponding iframe upon loading.
+              The boxes change colors as they load:
+              <br />Red indicates the widget source is being loaded
+              <br />Yellow indicates the iframe is being rendered and executing code
+              <br />Green indicates the parent window has rendered the VNode sent from the iframe via `postMessage`
           </span>
           <div className="iframes">
               {[...new Array(50)].map((n, i) => (
@@ -58,5 +60,3 @@ function App() {
 }
 
 export default App
-
-// sourceUrl={`https://demo-nsproxy.kitwallet.app/source/${i}`}

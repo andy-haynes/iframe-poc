@@ -7,15 +7,6 @@ export const Events = {
     IFRAME_RENDER: 'IFRAME_RENDER',
 };
 
-const buildScript = (id) => `
-    import { h } from 'https://esm.sh/preact';
-    const node = h('div', { className: 'iframe-initialized' }, '${id}');
-    window.parent.postMessage(
-        JSON.stringify({ type: '${Events.IFRAME_RENDER}', id: '${id}', node }),
-        '*'
-    );
-`;
-
 export function getAppDomId(id) {
     return `dom-${id}`;
 }
@@ -43,16 +34,12 @@ export function Widget({ id, sourceUrl }) {
                   scriptSrc={source}
               />
           )}
-          {!source && (
-              <span>
-                  Fetching app source...
-              </span>
-          )}
           <div
               id={getAppDomId(id)}
               className='iframe'
           >
-            <div className='iframe-uninitialized'>{id}</div>
+              {source && (<div className='iframe-loading'>{id}</div>)}
+              {!source && (<div className='iframe-unrendered'>{id}</div>)}
           </div>
       </div>
     );
